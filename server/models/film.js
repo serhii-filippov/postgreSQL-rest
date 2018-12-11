@@ -7,10 +7,22 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Film.associate = (models) => {
-    Film.hasMany(models.Reward);
-    Film.hasMany(models.Review);
-    Film.belongsTo(models.Genre);
-    Film.hasOne(models.Role);
+    Film.hasMany(models.Reward, {
+      foreignKey: 'filmId',
+      as: 'filmReward'
+    });
+    Film.hasMany(models.Review, {
+      foreignKey: 'filmId',
+      as: 'filmReview'
+    });
+    Film.belongsTo(models.Genre, {
+      foreignKey: 'genreId',
+      onDelete: 'CASCADE'
+    });
+    Film.belongsTo(models.Role, {
+      foreignKey: 'filmId',
+      onDelete: 'CASCADE'
+    });
   };
   return Film;
 };

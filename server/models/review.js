@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Review.associate = (models) => {
-    Review.belongsTo(models.Film);
+    Review.belongsTo(models.Film, {
+      foreignKey: 'filmId',
+      onDelete: 'CASCADE'
+    });
   };
   return Review;
 };

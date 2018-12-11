@@ -9,9 +9,13 @@ module.exports = (sequelize, DataTypes) => {
 
   Role.associate = (models) => {
     Role.belongsTo(models.Actor, {
-      // foreignKey: 'fk_actors'
+      foreignKey: 'actorId',
+      onDelete: 'CASCADE'
     });
-    Role.belongsTo(models.Film);
+    Role.hasOne(models.Film, {
+      // foreignKey: 'filmId',
+      // as: 'roleInFilm'
+    });
   };
   return Role;
 };

@@ -7,7 +7,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
 
   Reward.associate = (models) => {
-    Reward.belongsTo(models.Film);
+    Reward.belongsTo(models.Film, {
+      foreignKey: 'filmId',
+      onDelete: 'CASCADE'
+    });
   };
   return Reward;
 };

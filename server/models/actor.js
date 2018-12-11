@@ -12,9 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-
-  Actor.associate = (models) => {
-    Actor.hasOne(models.Role);
-  };
+  
+Actor.associate = (models) => {
+  Actor.hasMany(models.Role, {
+    foreignKey: 'actorId',
+    as: 'roles'
+  })
+};
+  
   return Actor;
 };

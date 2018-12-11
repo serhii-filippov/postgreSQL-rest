@@ -6,7 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   
   Genre.associate = (models) => {
-    Genre.hasMany(models.Film);
+    Genre.hasMany(models.Film, {
+      foreignKey: 'genreId',
+      as: 'filmGenre'
+    });
   };
   return Genre;
 };
