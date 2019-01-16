@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     birth_year: DataTypes.INTEGER,
     birthplace: DataTypes.STRING
   }, {
-    getterMethods: {
-      fullName() {
-        return this.firstName + ' ' + this.lastName
-      }
-    }
+    // getterMethods: {
+    //   fullName() {
+    //     return this.firstName + ' ' + this.lastName
+    //   }
+    // }
   });
   
 Actor.associate = (models) => {

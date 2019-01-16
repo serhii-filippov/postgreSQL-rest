@@ -1,0 +1,7 @@
+module.exports = {
+    plainPassword: 'Ns9(@dhxNXso4Qs*sl1',
+    saltRounds: 10,
+    somePlainPassword: 'not_exactly_Sn12INxso2d($@l1',
+    JWT_SECRET: 'someJsonWebTokenSecret',
+    jwt_refresh_secret: 'anotherJsOnWebRefreshToken'
+}

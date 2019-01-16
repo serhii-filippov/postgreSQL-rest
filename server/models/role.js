@@ -12,8 +12,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'actorId',
       onDelete: 'CASCADE'
     });
-    Role.hasOne(models.Film, {
-      // foreignKey: 'filmId',
+    Role.belongsTo(models.Film, {
+      foreignKey: 'filmId',
+      onDelete: 'CASCADE'
       // as: 'roleInFilm'
     });
   };

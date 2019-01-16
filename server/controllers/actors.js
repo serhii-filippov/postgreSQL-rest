@@ -5,55 +5,67 @@ const Actor = require('../models').Actor;
 module.exports = {
     create(req, res) {
         return Actor
-            .upsert({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                birth_year: req.body.birth_year,
-                birthplace: req.body.birthplace
-            })
-            .then(actor => res.status(201).send(actor))
-            .catch(error => res.status(400).send(error));
+                .upsert({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    birth_year: req.body.birth_year,
+                    birthplace: req.body.birthplace
+                })
+                .then(actor => res.status(201).send('Created new actor: \n' + actor))
+                .catch(error => res.status(400).send('Error occurred: ' + error));
     },
 
-    read(req, res) {
+    readAll(req, res) {
         return Actor
-            .all()
-            .then(actors => res.status(200).send(actor))
-            .catch(error => res.status(400).send(error));
+                .findAll()
+                .then(actors => res.status(200).send(actors))
+                .catch(error => res.status(400).send('Error occurred: ' + error));
+    },
+
+    readOne(req, res) {
+        return Actor
+                .findByPk(req.params.id)
+                .then(actor => {
+                    if (!actor) {
+                        return res.status(404).send('Actor with id: ' + req.params.id + ' wasn\'t found');
+                    }
+                    res.status(200).send(actor);
+                })
+                .catch(err => res.status(400).send('Error occurred: ' + err));
     },
 
     update(req, res) {
         return Actor
-            .findById(req.params.id)
-            .then(actor => {
-                if (!actor) {
-                    res.status(404).send('Actor with id: ' + req.params.id + ' wasn\'t found');
-                }
-                return actor
-                    .update({
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        birth_year: req.body.birth_year,
-                        birthplace: req.body.birthplace
-                    })
-                    .then(() => res.status(200).send(actor))
-                    .catch((error) => res.status(400).send(error));
-            })
-            .catch((error) => res.status(400).send(error));
+                .findByPk(req.params.id)
+                .then(actor => {
+                    if (!actor) {
+                        return res.status(404).send('Actor with id: ' + req.params.id + ' wasn\'t found');
+                    }
+                    return actor
+                        .update({
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            birth_year: req.body.birth_year,
+                            birthplace: req.body.birthplace
+                        })
+                        .then(() => res.status(200).send(actor))
+                        .catch((error) => res.status(400).send('Error occurred: ' + error));
+                })
+                .catch((error) => res.status(400).send('Error occurred: ' + error));
     },
 
-    delete(res, req) {
+    delete(req, res) {
         return Actor
-            .findById(req.params.id)
-            .then(actor => {
-                if (!actor) {
-                    res.status(404).send('Actor with id: ' + req.params.id + ' wasn\'t found');
-                }
-                return actor
-                    .destroy()
-                    .then(() => res.status(204).send('Successfuly deleted Actor with id: ' + req.params.id))
-                    .catch(error => res.status(400).send(error));
-            })
-            .catch(err => res.status(400).send(err));
+                .findByPk(req.params.id)
+                .then(actor => {
+                    if (!actor) {
+                        return res.status(404).send('Actor with id: ' + req.params.id + ' wasn\'t found');
+                    }
+                    return actor
+                            .destroy()
+                            .then(() => res.status(204).send('Successfuly deleted Actor with id: ' + req.params.id))
+                            .catch(error => res.status(400).send('Error occurred: ' + error));
+                })
+                .catch(err => res.status(400).send('Error occurred: ' + err));
     }
 }

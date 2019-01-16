@@ -19,9 +19,8 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'genreId',
       onDelete: 'CASCADE'
     });
-    Film.belongsTo(models.Role, {
+    Film.hasMany(models.Role, {
       foreignKey: 'filmId',
-      onDelete: 'CASCADE'
     });
   };
   return Film;
